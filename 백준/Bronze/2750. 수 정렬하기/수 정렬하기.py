@@ -1,10 +1,34 @@
 import sys
 list = [int(sys.stdin.readline().rstrip()) for i in range(int(input()))]
 
-for i in range(len(list)):
-    for j in range(i+1, len(list)):
+def mergeSort(list):
+    # split 완료
+    if len(list) == 1:
+        return list
+    
+    left = list[0:len(list)//2]
+    right = list[len(list)//2:]
 
-        if list[i] > list[j]:
-            list[i], list[j] = list[j], list[i]
+    # split 코드
+    left = mergeSort(left)
+    right = mergeSort(right)
 
-[print(v) for v in list]
+    # merge 코드
+    list = []
+    while left:
+        if not right:
+            list.extend(left)
+            left = []
+            continue
+        if left[0] > right[0]:
+            list.append(right[0])
+            del right[0]
+        else:
+            list.append(left[0])
+            del left[0]
+    list.extend(right)
+
+    return list
+
+list = mergeSort(list)
+[print(li) for li in list]
