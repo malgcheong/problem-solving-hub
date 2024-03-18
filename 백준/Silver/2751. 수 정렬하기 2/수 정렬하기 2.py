@@ -3,15 +3,19 @@
 import sys
 list = [int(sys.stdin.readline().rstrip()) for i in range(int(input()))]
 
-def sort(list):
-    if len(list) < 2:
+def mergeSort(list):
+    # split 완료
+    if len(list) == 1:
         return list
-    left = sort(list[:len(list)//2])
-    right = sort(list[len(list)//2:])
-    return mergeSort(left, right)
+    
+    left = list[:len(list)//2]
+    right = list[len(list)//2:]
 
-def mergeSort(left, right):
+    # split 코드
+    left = mergeSort(left)
+    right = mergeSort(right)
 
+    # merge 코드
     new_list=[]
     i=0
     j=0
@@ -31,6 +35,4 @@ def mergeSort(left, right):
             i+=1
     return new_list
 
-
-
-[print(li) for li in sort(list)]
+[print(li) for li in mergeSort(list)]
