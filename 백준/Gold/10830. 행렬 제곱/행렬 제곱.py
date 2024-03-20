@@ -15,10 +15,12 @@ def multiProcession(a, b):
 
 def multiProcessionRecursive(square, result):
     if square == 1:
+        global procession
         for i in range(n):
             for j in range(n):
-                result[i][j] %= 1000
-        return result
+                procession[i][j] %= 1000
+        return procession
+        
 
     if square % 2 == 0:
         halfResult = multiProcessionRecursive(square//2, result)
@@ -29,7 +31,5 @@ def multiProcessionRecursive(square, result):
         return multiProcession(multiProcession(halfResult, halfResult), result )
 
 answerList = multiProcessionRecursive(b, procession)
-for i in range(n):
-    for j in range(n):
-        print(answerList[i][j], end=" ")
-    print()
+for row in answerList:
+    print(*row)
