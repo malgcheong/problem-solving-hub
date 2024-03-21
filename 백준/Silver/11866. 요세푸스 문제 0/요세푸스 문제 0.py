@@ -41,5 +41,4 @@ while len(dq) != 0:
     result.append(str(dq.popleft()))
 
 
-
 print(f"<{', '.join(result)}>")
