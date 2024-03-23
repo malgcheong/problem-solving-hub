@@ -1,45 +1,48 @@
 import sys
-from collections import deque
+from collections import defaultdict, deque
 sys.setrecursionlimit(10**6)
-
-v, e, s = map(int, sys.stdin.readline().split())
-
-graph = [[0] * (v+1) for _ in range(v+1)]
-visited = [0] * (v + 1)
+v,e,s = map(int, sys.stdin.readline().split())
+visited = [False] * (v+1)
 visited2 = visited.copy()
 
-for _ in range(1, e+1):
-    a, b = map(int, sys.stdin.readline().split())
-    graph[a][b] =graph[b][a] = 1
 
-def dfs(stack):
-    if not stack:
-        print()
-        return 
-    node = stack.pop()
-    if visited[node] == 0:
-        print(node, end=' ')
-    visited[node] = 1 
-    for i in range(v, 0, -1):
-        if not visited[i] and graph[node][i]:
-            stack.append(i)
-    dfs(stack)
+class graph():
+    def __init__(self):
+        self.linkedList = defaultdict(list)
 
-def bfs(queue):
-    if not queue:
-        print()
-        return
-    node = queue.popleft()
-    if visited2[node] == 0:
-        print(node, end=' ')
-    visited2[node] = 1
-    for i in range(1, v+1):
-        if not visited2[i] and graph[node][i]:
-            queue.append(i)
-    bfs(queue)
-    
-stack = [s]
-dq = deque([s])
+    # 간선 추가 함수
+    def add_edge(self, u, v):
+        self.linkedList[u].append(v)
+        self.linkedList[v].append(u)
 
-dfs(stack)
-bfs(dq)
+    def dfs(self, start):
+        stack = [start]
+        
+        while stack:
+            node = stack.pop()
+            if not visited[node]:
+                visited[node] = True
+                print(node, end=" ")
+                stack.extend(sorted(self.linkedList[node], reverse=True))
+
+        
+    def bfs(self, start):
+        dq = deque([start])
+        
+        while dq:
+            node = dq.popleft()
+            if not visited2[node]:
+                visited2[node] = True
+                print(node, end=' ')
+                dq.extend(sorted(self.linkedList[node], reverse=False))
+
+graph = graph()
+
+for i in range(e):
+    u, v = map(int, sys.stdin.readline().split())
+    graph.add_edge(u,v)
+
+graph.dfs(s)
+print()
+graph.bfs(s)
+print()
