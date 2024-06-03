@@ -4,7 +4,7 @@ class Solution:
         recent_city = ""
         visited = [0] * len(paths)
 
-        cnt = 100;
+        cnt = 100
         while(min(visited) == 0):
             if cnt == 0:
                 break
