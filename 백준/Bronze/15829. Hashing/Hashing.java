@@ -9,14 +9,13 @@ public class Main {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
             int n = Integer.parseInt(br.readLine());
             String text = br.readLine();
-            int sum = 0;
+            long sum = 0;
+            long pow = 1; 
             for (int i = 0; i < text.length(); i++) {
-                sum += ((int)text.charAt(i)-96) * Math.pow(31, i);
+                sum += (text.charAt(i)-96) * pow;
+                pow = pow * 31 % 1234567891;
             }
-            if (sum >= 1234567891) {
-                sum %= 1234567891;
-            }
-            System.out.println(sum);
+            System.out.println(sum % 1234567891);
         } catch (IOException e) {
             e.printStackTrace();
         }
